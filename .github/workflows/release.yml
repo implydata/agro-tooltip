@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    branches: [master]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  CI: 'true'
+  HUSKY: 0
+
+jobs:
+  release:
+    # prevents this action from running on forks
+    if: github.repository == 'implydata/agro-tooltip'
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm install --prefer-offline --no-audit
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v2
+        with:
+          publish-script: npx changeset publish
+          create-github-releases: true
+        env:
+          # npm auth comes from the .npmrc that setup-node writes for registry-url
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>agro-tooltip example</title>
+    <!--
+      Served from the local build (run `npm run build` first). In your own page use:
+      https://unpkg.com/agro-tooltip/dist/agro-tooltip.css and https://unpkg.com/agro-tooltip
+    -->
+    <link rel="stylesheet" href="../dist/agro-tooltip.css" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 40px;
+        min-height: 150vh;
+      }
+      /* Restyle through the custom properties (they inherit from the tooltip's container) */
+      :root {
+        --agro-tooltip-background: #312e81;
+        --agro-tooltip-font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>agro-tooltip</h1>
+    <p><button data-tooltip="I show up right away">Hover me</button></p>
+    <p data-tooltip="Set on the paragraph, so every child gets it">
+      <span>This span</span> and <em>this em</em> share their parent's tooltip.
+    </p>
+    <p><span data-tooltip="Line one&#10;Line two">Multi line</span></p>
+
+    <script src="../dist/agro-tooltip.global.js"></script>
+    <script>
+      agroTooltip.initAgroTooltip();
+    </script>
+  </body>
+</html>

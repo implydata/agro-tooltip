@@ -1,0 +1,88 @@
+{
+  "name": "agro-tooltip",
+  "version": "0.0.0",
+  "description": "A tiny, dependency free tooltip that follows the mouse and shows up immediately for any element with a data-tooltip attribute",
+  "keywords": [
+    "tooltip",
+    "mouse",
+    "data-tooltip",
+    "hover",
+    "title"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "unpkg": "dist/agro-tooltip.global.js",
+  "jsdelivr": "dist/agro-tooltip.global.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./agro-tooltip.css": "./dist/agro-tooltip.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "build": "npm run clean && tsc -p tsconfig.dist.json && tsup",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "test": "npm run typecheck && npm run eslint && npm run prettify-check && jest",
+    "typecheck": "tsc --noEmit",
+    "eslint": "TIMING=1 npx eslint --max-warnings 0 'src/**/*.ts?(x)'",
+    "eslint-fix": "npm run eslint -- --fix",
+    "eslint-changed-only": "git diff --diff-filter=ACMR --cached --name-only | grep -E ^src/.*\\.tsx\\?$ | xargs ./node_modules/.bin/eslint",
+    "eslint-fix-changed-only": "npm run eslint-changed-only -- --fix",
+    "prettify": "prettier --write '{src,script}/**/*.{ts,js,css}' '*.{ts,mjs,md}' 'examples/*.html'",
+    "prettify-check": "prettier --check '{src,script}/**/*.{ts,js,css}' '*.{ts,mjs,md}' 'examples/*.html'",
+    "prepare": "husky"
+  },
+  "files": [
+    "dist/"
+  ],
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/?(*.)+(spec).ts"
+    ]
+  },
+  "prettier": "@awesome-code-style/prettier-config",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/implydata/agro-tooltip.git"
+  },
+  "author": "Imply Data",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/implydata/agro-tooltip/issues"
+  },
+  "homepage": "https://github.com/implydata/agro-tooltip",
+  "devDependencies": {
+    "@awesome-code-style/eslint-config": "^6.2.1",
+    "@awesome-code-style/prettier-config": "^5.0.2",
+    "@changesets/cli": "^3.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.19.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-notice": "^1.0.0",
+    "globals": "^17.12.0",
+    "husky": "^9.1.7",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
+    "prettier": "^3.9.9",
+    "ts-jest": "^29.4.14",
+    "tsup": "^8.5.1",
+    "typescript": "~6.0.3"
+  },
+  "allowScripts": {
+    "@parcel/watcher": false,
+    "esbuild": false,
+    "fsevents": false,
+    "unrs-resolver": false
+  }
+}
