@@ -1,6 +1,6 @@
 {
   "name": "agro-tooltip",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A tiny, dependency free tooltip that follows the mouse and shows up immediately for any element with a data-tooltip attribute",
   "keywords": [
     "tooltip",
